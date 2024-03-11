@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	u "github.com/Yandex-Practicum/go-rest-api-homework/utils"
 	"github.com/go-chi/chi/v5"
 	"net/http"
 )
@@ -55,8 +56,7 @@ func GetTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	u.SetUpHeaders(http.StatusOK, w)
 	w.Write(res)
 }
 
@@ -66,8 +66,7 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	u.SetUpHeaders(http.StatusOK, w)
 	w.Write(res)
 }
 
@@ -86,8 +85,7 @@ func PostTask(w http.ResponseWriter, r *http.Request) {
 
 	tasks[task.ID] = task
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
+	u.SetUpHeaders(http.StatusCreated, w)
 }
 
 func DeleteTask(w http.ResponseWriter, r *http.Request) {
@@ -101,8 +99,7 @@ func DeleteTask(w http.ResponseWriter, r *http.Request) {
 
 	delete(tasks, id)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	u.SetUpHeaders(http.StatusOK, w)
 }
 
 func main() {
@@ -113,9 +110,6 @@ func main() {
 	r.Get("/tasks/{id}", GetTask)
 	r.Post("/tasks", PostTask)
 	r.Delete("/tasks/{id}", DeleteTask)
-
-	// здесь регистрируйте ваши обработчики
-	// ...
 
 	if err := http.ListenAndServe(":8080", r); err != nil {
 		fmt.Printf("Ошибка при запуске сервера: %s", err.Error())
