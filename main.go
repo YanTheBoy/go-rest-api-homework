@@ -49,7 +49,7 @@ func GetTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, err := json.MarshalIndent(task, "", "  ")
+	res, err := json.MarshalIndent(task, "", "    ")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
@@ -60,7 +60,7 @@ func GetTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetTasks(w http.ResponseWriter, r *http.Request) {
-	res, err := json.MarshalIndent(tasks, "", "  ")
+	res, err := json.MarshalIndent(tasks, "", "    ")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
